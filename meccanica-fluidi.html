@@ -1,0 +1,490 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#1d2a33"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Quaderni"><style>[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}.home-link{display:inline-block;margin:12px 0 0;font:500 .85rem "IBM Plex Mono",ui-monospace,monospace;color:inherit;opacity:.7;text-decoration:none}.home-link:hover{opacity:1}</style></head><body>
+<div style="padding-inline:16px;max-width:980px;margin:0 auto"><a class="home-link" href="./">‹ Tutti i quaderni</a></div>
+<title>Quaderno di Meccanica dei Fluidi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=STIX+Two+Text:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+/* Layout: stesso quaderno tecnico della serie (carta millimetrata), accento blu acqua; arancio = collegamento con Macchine */
+:root{
+  --paper:#f6f8f9; --sheet:#ffffff; --grid:#e1e8ec; --ink:#1b2834; --muted:#566874; --line:#cbd6dd;
+  --acc:#1f5f9e; --acc-soft:#e0ebf6; --mac:#a5571f; --mac-soft:#f6e6d9; --warn:#9b2c2c; --warn-soft:#f8e3e1; --ok:#1f6f4b; --ok-soft:#dcefe5;
+  --f-display:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-math:"STIX Two Text","Cambria Math",Cambria,"Times New Roman",serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#11171c; --sheet:#172028; --grid:#1b262e; --ink:#e2eaef; --muted:#98abb7; --line:#2b3a45;
+  --acc:#79b0ea; --acc-soft:#16283a; --mac:#e39a63; --mac-soft:#3a271a; --warn:#f08a80; --warn-soft:#3b1f1e; --ok:#6fd0a1; --ok-soft:#173327; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#11171c; --sheet:#172028; --grid:#1b262e; --ink:#e2eaef; --muted:#98abb7; --line:#2b3a45;
+  --acc:#79b0ea; --acc-soft:#16283a; --mac:#e39a63; --mac-soft:#3a271a; --warn:#f08a80; --warn-soft:#3b1f1e; --ok:#6fd0a1; --ok-soft:#173327; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:15.5px/1.6 var(--f-body);
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;padding-inline:16px;padding-block:0 64px}
+.wrap{max-width:980px;margin:0 auto}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,5vw,3rem);font-weight:700}
+h2{font-size:1.65rem;font-weight:700;margin-block:8px 6px}
+h3{font-size:1.2rem;font-weight:600}
+p{margin:0}
+.eyebrow{font:500 .74rem/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--acc)}
+.muted{color:var(--muted)}
+.m{font-family:var(--f-math);font-size:1.08em}
+header.top{padding-block:28px 14px;display:grid;gap:10px}
+.lead{max-width:68ch;color:var(--muted);font-size:1.02rem}
+.progress{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font:500 .82rem var(--f-mono);color:var(--muted)}
+.bar{flex:1 1 200px;height:8px;background:var(--line);border-radius:4px;overflow:hidden;max-width:360px}
+.bar span{display:block;height:100%;background:var(--acc);width:0;transition:width .4s}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:2px solid var(--ink);display:flex;gap:2px;overflow-x:auto;margin-bottom:22px}
+nav.tabs button{font:600 1rem var(--f-display);letter-spacing:.03em;background:none;border:0;color:var(--muted);padding:10px 14px;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;margin-bottom:-2px}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--acc)}
+button:focus-visible,summary:focus-visible,input:focus-visible,select:focus-visible,.node:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+section.panel{display:grid;gap:18px}
+.sheet{background:var(--sheet);border:1px solid var(--line);border-radius:4px;padding:20px}
+.note{border-left:3px solid var(--acc);background:var(--acc-soft);padding:12px 16px;border-radius:0 4px 4px 0}
+.note.mac{border-color:var(--mac);background:var(--mac-soft)}
+.tag{display:inline-block;font:500 .7rem/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;padding:4px 7px;border-radius:3px;white-space:nowrap}
+.tag.mac{background:var(--mac-soft);color:var(--mac)}
+.steps-plan{display:grid;gap:10px}
+.step{display:grid;grid-template-columns:108px 1fr;gap:16px;background:var(--sheet);border:1px solid var(--line);border-radius:4px;padding:14px 16px}
+.sdate{font:500 .8rem/1.4 var(--f-mono);color:var(--muted)}
+.sdate b{display:block;font:700 1.3rem var(--f-display);color:var(--ink)}
+.sbody{min-width:0;display:grid;gap:6px}
+.slinks{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:500 .8rem var(--f-mono);border:1px solid var(--line);background:var(--paper);color:var(--ink);padding:3px 8px;border-radius:3px;cursor:pointer;text-align:left}
+.chip.done{background:var(--acc-soft);border-color:var(--acc);color:var(--acc);text-decoration:line-through}
+.mapbox{overflow-x:auto}
+.mapbox svg{display:block;min-width:760px;width:100%;height:auto}
+.node rect{fill:var(--sheet);stroke:var(--ink);stroke-width:1.4}
+.node.mac rect{stroke:var(--mac);stroke-width:2.4}
+.node text{fill:var(--ink);font:600 14px var(--f-display)}
+.node text.sub{fill:var(--muted);font:400 11px var(--f-mono)}
+.node{cursor:pointer}
+.node:hover rect{fill:var(--acc-soft)}
+.edge{stroke:var(--muted);stroke-width:1.4;fill:none}
+.edge.mac{stroke:var(--mac);stroke-width:2;stroke-dasharray:5 4}
+.head{fill:var(--muted)} .head.mac{fill:var(--mac)}
+.lbl{fill:var(--muted);font:400 11px var(--f-mono)}
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.filters input[type=search]{flex:1 1 220px;font:inherit;padding:8px 12px;border:1px solid var(--line);background:var(--sheet);color:var(--ink);border-radius:4px}
+.toggle{display:flex;gap:6px;align-items:center;font-size:.9rem;color:var(--muted)}
+.mod{display:grid;gap:8px}
+.modhead{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-top:10px}
+.modhead .eyebrow{color:var(--muted)}
+details.lez{background:var(--sheet);border:1px solid var(--line);border-radius:4px}
+details.lez[open]{border-color:var(--ink)}
+details.lez>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;padding:12px 16px}
+details.lez>summary::-webkit-details-marker{display:none}
+.num{font:500 .8rem var(--f-mono);color:var(--acc);min-width:2.4em}
+.st{font:600 1.08rem var(--f-display);min-width:0}
+.sm{display:flex;gap:6px;align-items:center}
+.check{width:20px;height:20px;accent-color:var(--acc);cursor:pointer}
+.lbody{padding:14px 16px 18px;display:grid;gap:14px;border-top:1px dashed var(--line)}
+.lbody h4{font:500 .74rem var(--f-mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:0 0 4px}
+.lbody ul{margin:0;padding-left:1.2em;display:grid;gap:3px}
+.formulas{display:grid;gap:6px}
+.f{font-family:var(--f-math);font-size:1.1rem;background:var(--paper);border:1px solid var(--line);padding:6px 12px;border-radius:3px;overflow-x:auto}
+.f small{font-family:var(--f-body);font-size:.8rem;color:var(--muted);margin-left:10px}
+.trap{border-left:3px solid var(--warn);background:var(--warn-soft);padding:10px 14px;border-radius:0 4px 4px 0}
+.trap b{color:var(--warn)}
+.macnote{border-left:3px solid var(--mac);background:var(--mac-soft);padding:10px 14px;border-radius:0 4px 4px 0}
+.macnote b{color:var(--mac)}
+.exnote{border-left:3px solid var(--ok);background:var(--ok-soft);padding:10px 14px;border-radius:0 4px 4px 0}
+.exnote b{color:var(--ok)}
+.file{font:400 .78rem var(--f-mono);color:var(--muted);word-break:break-all}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.fcard{background:var(--sheet);border:1px solid var(--line);border-radius:4px;padding:16px;min-width:0;display:grid;gap:8px;align-content:start}
+.fcard table{border-collapse:collapse;width:100%;font-size:.92rem}
+.fcard td{padding:5px 4px;border-bottom:1px solid var(--line);vertical-align:top}
+.fcard td:first-child{color:var(--muted);width:40%}
+.qtools{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+select,.btn{font:500 .9rem var(--f-body);padding:8px 12px;border:1px solid var(--line);background:var(--sheet);color:var(--ink);border-radius:4px;cursor:pointer}
+.btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.card{background:var(--sheet);border:1px solid var(--ink);border-radius:4px;padding:24px;display:grid;gap:14px;min-height:220px;align-content:start}
+.card .q{font:600 1.3rem/1.35 var(--f-display)}
+.card .a{border-top:1px dashed var(--line);padding-top:12px}
+.score{font:500 .85rem var(--f-mono);color:var(--muted)}
+.steps{display:grid;gap:10px;counter-reset:s;padding:0;margin:0}
+.steps li{list-style:none;display:grid;grid-template-columns:34px 1fr;gap:10px}
+.steps li::before{counter-increment:s;content:counter(s);font:700 1.2rem var(--f-display);color:var(--acc);border:1.5px solid var(--acc);border-radius:50%;width:30px;height:30px;display:grid;place-items:center}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.two>*{min-width:0}
+.ptitle{display:none}
+.qa{border-bottom:1px solid var(--line);padding-block:8px}
+.qa b{font-family:var(--f-display);font-size:1.08rem}
+@media (max-width:560px){.step{grid-template-columns:1fr;gap:6px} details.lez>summary{grid-template-columns:auto 1fr} details.lez>summary .sm{grid-column:1/-1}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+html.stampa .ptitle{display:block;font-size:2rem;border-bottom:2px solid var(--ink);padding-bottom:6px;margin-top:18px;break-before:page}
+html.stampa nav.tabs,html.stampa .progress,html.stampa .filters,html.stampa .qtools,html.stampa #qcard{display:none!important}
+html.stampa body{background-image:none}
+html.stampa .mapbox svg{min-width:0}
+html.stampa .step,html.stampa .sheet,html.stampa .fcard,html.stampa .qa,html.stampa .trap,html.stampa .macnote,html.stampa .exnote,html.stampa .f{break-inside:avoid}
+</style>
+
+<div class="wrap">
+<header class="top">
+  <span class="eyebrow">Meccanica dei Fluidi · Prof. Bottacin Busolin · 15 lezioni · esame da recuperare</span>
+  <h1>Quaderno di Meccanica dei Fluidi</h1>
+  <p class="lead">Tutto il corso in un posto: il percorso consigliato, la mappa, il riassunto di ogni lezione, il formulario e le domande per verificarti. Le lezioni segnate <span class="tag mac">Macchine</span> servono anche per Macchine con laboratorio: pompe, turbine, ventilatori e impianti.</p>
+  <div class="progress"><span id="progTxt">0 / 15 lezioni studiate</span><div class="bar"><span id="progBar"></span></div></div>
+</header>
+
+<nav class="tabs" role="tablist" aria-label="Sezioni">
+  <button role="tab" aria-selected="true" data-tab="piano">Percorso</button>
+  <button role="tab" aria-selected="false" data-tab="mappa">Mappa</button>
+  <button role="tab" aria-selected="false" data-tab="lezioni">Lezioni</button>
+  <button role="tab" aria-selected="false" data-tab="formule">Formulario</button>
+  <button role="tab" aria-selected="false" data-tab="quiz">Autoverifica</button>
+  <button role="tab" aria-selected="false" data-tab="metodo">Come studiare</button>
+</nav>
+
+<section class="panel" id="p-piano">
+  <div class="note">Il percorso segue l'ordine del corso, che qui è già quello giusto. Ogni tappa vale circa una settimana a 6–8 ore. Quando avremo le date d'esame lo incastro con Elettrotecnica e Fisica tecnica in un piano unico.</div>
+  <div class="steps-plan" id="plan"></div>
+</section>
+
+<section class="panel" id="p-mappa" hidden>
+  <div class="sheet">
+    <span class="eyebrow">Mappa del corso</span>
+    <h2>Dal fluido fermo all'impianto con la pompa</h2>
+    <p class="muted" style="max-width:68ch">Ogni blocco usa quelli prima. In arancio la strada verso Macchine con laboratorio. Clicca un blocco per aprirne le lezioni.</p>
+  </div>
+  <div class="sheet mapbox" id="mapbox"></div>
+  <div class="two">
+    <div class="sheet" style="display:grid;gap:8px">
+      <h3>Le tre equazioni che reggono tutto</h3>
+      <p><b>1. Stevino</b> (fluido fermo): scendendo di <span class="m"><i>h</i></span> la pressione aumenta di <span class="m">γ<i>h</i></span>. Su questa si basa tutta la statica.</p>
+      <p><b>2. Continuità</b> (la massa si conserva): <span class="m"><i>Q</i> = <i>V</i>·<i>A</i></span> è la stessa in ogni sezione. Dove il tubo si stringe, il fluido accelera.</p>
+      <p><b>3. Energia</b> (Bernoulli, poi generalizzato): <span class="m"><i>H</i> = <i>z</i> + <i>p</i>/γ + <i>V</i>²/2<i>g</i></span> si conserva. Con le perdite, la pompa e la turbina diventa <span class="m"><i>H</i><sub>in</sub> + <i>h</i><sub>p</sub> = <i>H</i><sub>out</sub> + <i>h</i><sub>t</sub> + <i>h</i><sub>L</sub></span>.</p>
+      <p class="muted">A queste si aggiunge la <b>quantità di moto</b>, che serve quando vuoi le <b>forze</b> (curve, ugelli, getti su pale).</p>
+    </div>
+    <div class="sheet" style="display:grid;gap:8px">
+      <h3>Il carico <span class="m"><i>H</i></span> si misura in metri</h3>
+      <p>In idraulica le energie si esprimono come <b>altezze</b>, cioè energia per unità di peso. <span class="m"><i>z</i></span> è la quota, <span class="m"><i>p</i>/γ</span> è l'altezza a cui salirebbe l'acqua in un piezometro, <span class="m"><i>V</i>²/2<i>g</i></span> è l'altezza cinetica.</p>
+      <p>Per questo in Macchine la <b>prevalenza</b> di una pompa si dà in metri: 30 m di prevalenza significa che la pompa dà a ogni newton d'acqua l'energia per salire di 30 m.</p>
+      <p>Per passare a una potenza: <span class="m"><i>P</i> = γ <i>Q</i> <i>H</i></span>, cioè peso specifico × portata × carico.</p>
+    </div>
+  </div>
+</section>
+
+<section class="panel" id="p-lezioni" hidden>
+  <div class="filters">
+    <input type="search" id="q" placeholder="Cerca: Stevino, Bernoulli, Moody, cavitazione…" aria-label="Cerca nelle lezioni">
+    <label class="toggle"><input type="checkbox" id="onlyMac"> solo Macchine</label>
+    <button class="btn" id="expandAll">Apri tutte</button>
+  </div>
+  <div id="lezList" style="display:grid;gap:14px"></div>
+</section>
+
+<section class="panel" id="p-formule" hidden>
+  <div class="note">Notazione del docente: <span class="m"><i>p</i></span> pressione relativa (zero in atmosfera), <span class="m"><i>p</i>*</span> assoluta, <span class="m">γ = ρ<i>g</i></span> peso specifico (acqua 9806 N/m³), p.c.i. = piano dei carichi idrostatici.</div>
+  <div class="fgrid" id="fgrid"></div>
+</section>
+
+<section class="panel" id="p-quiz" hidden>
+  <div class="qtools">
+    <label for="qmod" class="muted">Argomento</label>
+    <select id="qmod"></select>
+    <button class="btn" id="qshuffle">Mescola</button>
+    <span class="score" id="qscore"></span>
+  </div>
+  <div class="card" id="qcard">
+    <span class="eyebrow" id="qmeta"></span>
+    <div class="q" id="qtext"></div>
+    <div class="a" id="qans" hidden></div>
+    <div class="qtools">
+      <button class="btn primary" id="qshow">Mostra risposta</button>
+      <button class="btn" id="qok" hidden>La sapevo</button>
+      <button class="btn" id="qko" hidden>Da ripassare</button>
+    </div>
+  </div>
+  <p class="muted" style="font-size:.9rem">Rispondi su un foglio prima di girare la carta. Per quelle con un calcolo, fallo fino in fondo.</p>
+</section>
+
+<section class="panel" id="p-metodo" hidden>
+  <div class="sheet" style="display:grid;gap:14px">
+    <span class="eyebrow">Esercizi di idraulica</span>
+    <h2>Lo schema per impostare quasi tutti gli esercizi</h2>
+    <ol class="steps">
+      <li><div><b>Disegna e scegli le sezioni.</b> Le sezioni comode sono quelle dove sai qualcosa: pelo libero di un serbatoio (<span class="m"><i>p</i> = 0</span>, <span class="m"><i>V</i> ≈ 0</span>), getto libero (<span class="m"><i>p</i> = 0</span>), un manometro.</div></li>
+      <li><div><b>Fissa la quota di riferimento</b> <span class="m"><i>z</i> = 0</span> e tienila per tutto l'esercizio.</div></li>
+      <li><div><b>Fluido fermo?</b> Usa Stevino e cammina lungo il fluido: <span class="m">+γ<i>h</i></span> scendendo, <span class="m">−γ<i>h</i></span> salendo.</div></li>
+      <li><div><b>Fluido in moto?</b> Scrivi continuità (<span class="m"><i>Q</i> = <i>VA</i></span>) e il bilancio dell'energia tra le due sezioni, con le perdite <span class="m"><i>h</i><sub>L</sub></span> e le eventuali <span class="m"><i>h</i><sub>p</sub></span> e <span class="m"><i>h</i><sub>t</sub></span>.</div></li>
+      <li><div><b>Ti chiedono una forza?</b> Aggiungi la quantità di moto su un volume di controllo: <span class="m">Σ<i>F</i> = ρ<i>Q</i>(<i>V</i><sub>out</sub> − <i>V</i><sub>in</sub>)</span>.</div></li>
+      <li><div><b>Controlla il risultato</b>: le unità, il segno della pressione (se esce minore della tensione di vapore c'è cavitazione) e che le perdite vengano positive.</div></li>
+    </ol>
+  </div>
+  <div class="two">
+    <div class="sheet" style="display:grid;gap:8px">
+      <h3>Meccanica dei fluidi e Macchine con laboratorio</h3>
+      <p>Una pompa o una turbina è un punto dell'impianto in cui il carico <span class="m"><i>H</i></span> salta su o giù. Tutto il resto dell'impianto sono tubi con perdite. Il <b>punto di funzionamento</b> è dove la curva della pompa incontra la curva dell'impianto, <span class="m"><i>h</i> = Δ<i>z</i> + <i>aQ</i>²</span>.</p>
+      <p>Per questo le lezioni chiave per Macchine sono: <b>Bernoulli</b>, <b>equazioni globali</b> (ne viene fuori l'equazione di Eulero delle turbomacchine), <b>perdite di carico</b> e <b>impianti con pompe e turbine</b>. Sulla <b>cavitazione</b> si basa il concetto di NPSH.</p>
+    </div>
+    <div class="sheet" style="display:grid;gap:8px">
+      <h3>Cosa manca nelle slide</h3>
+      <p>Le slide hanno tante derivazioni ma <b>pochi esercizi numerici</b>. Gli esempi con i numeri che trovi nel quaderno li ho aggiunti io e sono segnati come tali: servono per allenarti.</p>
+      <p>Per l'esame ti serviranno i <b>temi d'esame degli anni passati</b>. Se li trovi sul sito del corso o su Moodle, mettili nella cartella e ti preparo le soluzioni commentate.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<script>
+const MODS={
+ A:{n:"Proprietà dei fluidi",d:"Che cos'è un fluido e come si descrive"},
+ B:{n:"Statica",d:"Pressioni e spinte nei fluidi fermi"},
+ C:{n:"Cinematica e Bernoulli",d:"Fluidi in moto, carico, misure di portata"},
+ D:{n:"Equazioni globali",d:"Bilanci su un volume di controllo: massa, forze, energia"},
+ E:{n:"Correnti in pressione",d:"Perdite di carico, impianti con pompe e turbine"},
+ F:{n:"Canali e corpi",d:"Correnti a superficie libera, resistenza e portanza"}
+};
+const L=[
+{id:"01",m:"A",mac:2,t:"Proprietà dei fluidi",f:"PowerPoint Presentation.pdf",
+ s:"Un <b>fluido</b> si deforma senza fermarsi appena riceve uno sforzo tangenziale, anche piccolo. Un solido invece si deforma di poco e poi si ferma. Non si studiano le molecole: grazie all'ipotesi di <b>mezzo continuo</b> si assegnano a ogni punto una densità, una pressione e una velocità medie. La <b>densità</b> ρ è la massa per unità di volume (acqua 1000 kg/m³, aria circa 1,2), il <b>peso specifico</b> γ = ρg è il peso per unità di volume. La pressione può essere <b>assoluta</b> (p*, misurata dal vuoto) o <b>relativa</b> (p, misurata dall'atmosfera), quindi p può essere negativa ma mai sotto −101,3 kPa. La <b>viscosità</b> μ misura quanto il fluido resiste a scorrere: nei liquidi cala con la temperatura, nei gas cresce. Poi la <b>comprimibilità</b> (E<sub>v</sub>), la velocità del suono, la <b>tensione di vapore</b> (la pressione a cui il liquido bolle) e la tensione superficiale.",
+ fx:["ρ = <i>m</i>/𝑉   γ = ρ<i>g</i> <small>acqua: 1000 kg/m³, 9806 N/m³</small>","<i>p</i> = <i>p</i>* − <i>p</i>*<sub>atm</sub> <small>p*<sub>atm</sub> = 101 325 Pa</small>","τ = μ d<i>u</i>/d<i>y</i>   ν = μ/ρ <small>fluido newtoniano</small>","ρ = <i>p</i>*/(<i>RT</i>) <small>gas ideale, p* assoluta, T in K</small>","<i>E</i><sub>v</sub> = −d<i>p</i>/(d𝑉/𝑉)   <i>c</i> = √(<i>E</i><sub>v</sub>/ρ)"],
+ k:["Convertire tra pressione assoluta e relativa e tra le unità (Pa, bar, atm)","Calcolare lo sforzo in un fluido tra due piastre con τ = μU/b","Passare da μ a ν","Spiegare cos'è la tensione di vapore"],
+ tr:"Nella legge dei gas vanno la pressione <b>assoluta</b> e la temperatura in <b>kelvin</b>. Con la relativa o i gradi Celsius il risultato è sbagliato.",
+ mc:"La tensione di vapore è la base della <b>cavitazione</b> nelle pompe: se all'ingresso della girante la pressione scende fino a p<sub>v</sub> si formano bolle. Da qui viene il concetto di NPSH."},
+{id:"02",m:"B",mac:2,t:"Statica I: pressione, Stevino, manometri",f:"Statica dei fluidi - Parte 1.pdf",
+ s:"In un fluido fermo non ci sono sforzi tangenziali: sulle superfici agisce solo la pressione, sempre perpendicolare e sempre di compressione. La <b>legge di Pascal</b> dice che in un punto la pressione è uguale in tutte le direzioni. Dall'equilibrio di un cubetto si ottiene che la pressione non cambia in orizzontale e cresce scendendo: d<i>p</i>/d<i>z</i> = −γ. Per un liquido questa è la <b>legge di Stevino</b>: scendendo di h la pressione aumenta di γh, qualunque sia la forma del recipiente. Una pressione si può quindi esprimere come <b>altezza di colonna</b> di liquido (10,3 m d'acqua = 760 mm di mercurio = 1 atm). I <b>manometri</b> si risolvono camminando lungo il tubo: +γh quando scendi, −γh quando sali. Il <b>p.c.i.</b> (piano dei carichi idrostatici) è la quota a cui la pressione relativa sarebbe zero.",
+ fx:["<i>p</i><sub>1</sub> = <i>p</i><sub>2</sub> + γ<i>h</i> <small>Stevino, punto 1 più in basso di h</small>","d<i>p</i>/d<i>z</i> = −γ <small>z verso l'alto</small>","<i>h</i> = Δ<i>p</i>/γ <small>altezza piezometrica [m]</small>","<i>F</i><sub>2</sub>/<i>F</i><sub>1</sub> = <i>A</i><sub>2</sub>/<i>A</i><sub>1</sub> <small>sollevatore idraulico</small>","<i>h</i>* = <i>p</i><sub>gas</sub>/γ <small>posizione del p.c.i. in un serbatoio chiuso</small>"],
+ k:["Applicare Stevino anche con più liquidi sovrapposti e disegnare il diagramma delle pressioni","Risolvere manometri semplici e differenziali","Convertire una pressione in metri di colonna d'acqua o mm di mercurio","Trovare il p.c.i. in un serbatoio con gas in pressione o in depressione"],
+ tr:"Puoi eguagliare le pressioni di due punti alla stessa quota solo se sono nello <b>stesso fluido continuo</b>. Se in mezzo c'è un fluido diverso, non vale.",
+ mc:"I manometri differenziali e i trasduttori sono gli strumenti con cui in laboratorio misuri la prevalenza di una pompa."},
+{id:"03",m:"B",mac:1,t:"Statica II: spinte su superfici piane",f:"Statica dei fluidi - Parte 2.pdf",
+ s:"Un liquido spinge su una parete piana con pressioni che crescono con la profondità. La risultante (<b>spinta</b>) è la pressione nel baricentro della superficie per l'area: F = p<sub>c</sub>A. Graficamente è il volume del <b>solido delle pressioni</b>. La spinta non è applicata nel baricentro ma più in basso, nel <b>centro di spinta</b> CP, perché in basso la pressione è maggiore. Per una parete rettangolare che arriva alla superficie, CP sta a h/3 dal fondo. In generale si usa y<sub>R</sub> = y<sub>c</sub> + I<sub>xc</sub>/(y<sub>c</sub>A), con le y misurate lungo il piano della parete a partire dalla retta di sponda (sul p.c.i.). In profondità CP si avvicina al baricentro. Se parte della superficie è in depressione le forze si sommano con il loro segno e il CP può cadere anche fuori dalla superficie.",
+ fx:["<i>F</i> = <i>p</i><sub>c</sub> <i>A</i> = γ <i>h</i><sub>c</sub> <i>A</i>","<i>y</i><sub>R</sub> = <i>y</i><sub>c</sub> + <i>I</i><sub>xc</sub>/(<i>y</i><sub>c</sub><i>A</i>)","parete verticale a filo d'acqua: <i>F</i> = γ<i>bh</i>²/2 a <i>h</i>/3 dal fondo","rettangolo: <i>I</i><sub>xc</sub> = <i>ba</i>³/12   cerchio: <i>I</i><sub>xc</sub> = π<i>R</i>⁴/4"],
+ k:["Calcolare modulo e punto di applicazione della spinta su paratoie rettangolari e circolari","Scrivere l'equilibrio alla rotazione di una paratoia incernierata","Gestire casi con depressione o con due liquidi sovrapposti"],
+ tr:"Il centro di spinta <b>non</b> è il baricentro, tranne quando la pressione è uniforme (gas o grande profondità). Le y si misurano lungo il piano inclinato a partire dalla retta di sponda; h<sub>c</sub> è la profondità verticale.",
+ ex:"Paratoia verticale larga 2 m con 3 m d'acqua: F = 9806·2·9/2 ≈ 88 kN, applicata 1 m sopra il fondo."},
+{id:"04",m:"B",mac:1,t:"Statica III: spinte su superfici curve",f:"Statica dei fluidi - Parte 3.pdf",
+ s:"Su una superficie curva le forze di pressione cambiano direzione da punto a punto, quindi si lavora <b>per componenti</b>. La componente <b>orizzontale</b> è uguale alla spinta sulla proiezione verticale della superficie, che si calcola come una parete piana. La componente <b>verticale</b> è il peso del volume di fluido compreso tra la superficie e il p.c.i. (anche se quel volume è solo immaginario). Va verso il basso se il fluido sta sopra la superficie, verso l'alto se sta sotto. In alternativa si usa l'<b>equilibrio globale</b>: si isola un volume di fluido e si bilanciano le forze. Per superfici circolari la spinta passa sempre per il centro, perché ogni forza elementare è radiale.",
+ fx:["<i>F</i><sub>x</sub> = <i>p</i><sub>Cx</sub> <i>A</i><sub>x</sub> <small>spinta sulla proiezione verticale</small>","<i>F</i><sub>z</sub> = γ𝑉 <small>peso del volume tra superficie e p.c.i.</small>","<i>F</i> = √(<i>F</i><sub>x</sub>² + <i>F</i><sub>z</sub>²)   α = atan(<i>F</i><sub>z</sub>/<i>F</i><sub>x</sub>)"],
+ k:["Trovare la proiezione verticale e calcolarne la spinta","Individuare il volume giusto e il verso della componente verticale","Usare il fatto che su superfici circolari la spinta passa per il centro"],
+ tr:"Il volume da usare è quello tra la superficie e il <b>p.c.i.</b>, non quello del liquido che c'è davvero.",
+ mc:"Lo stesso ragionamento serve per le forze su casse a spirale, curve delle tubazioni e fondi bombati dei serbatoi in pressione."},
+{id:"05",m:"B",mac:0,t:"Statica IV: galleggiamento e stabilità",f:"galleggiamento.pdf",
+ s:"Su un corpo immerso le spinte orizzontali si annullano; in verticale la pressione sotto supera quella sopra. Il risultato è la <b>spinta di Archimede</b>: una forza verso l'alto pari al peso del fluido spostato, applicata nel baricentro del volume immerso (<b>centro di galleggiamento</b> C). Il peso è applicato nel baricentro G. Per l'equilibrio, spinta e peso devono essere uguali e C e G sulla stessa verticale. Un corpo tutto immerso è stabile se C sta sopra G. Un corpo galleggiante invece può essere stabile anche con G sopra C, purché il <b>metacentro</b> M stia sopra G: più è largo lo scafo, più è stabile.",
+ fx:["<i>F</i><sub>B</sub> = γ<sub>fluido</sub> 𝑉<sub>immerso</sub>","<i>GM</i> = <i>I</i><sub>s</sub>/𝑉<sub>immerso</sub> − <i>CG</i> <small>stabile se GM &gt; 0</small>","corpo omogeneo: 𝑉<sub>imm</sub>/𝑉 = ρ<sub>corpo</sub>/ρ<sub>fluido</sub>"],
+ k:["Calcolare la spinta, la parte immersa e il peso apparente","Valutare la stabilità di un corpo immerso o galleggiante"],
+ tr:"Nella spinta va il peso specifico del <b>fluido</b> e il volume <b>immerso</b>, non quelli del corpo."},
+{id:"06",m:"B",mac:2,t:"Statica V: fluidi in moto rigido",f:"moto-rigido.pdf",
+ s:"Se il recipiente accelera o ruota e il liquido lo segue in blocco, non ci sono scorrimenti e vale ancora la statica, aggiungendo l'accelerazione. È come se alla gravità si aggiungesse una gravità apparente −a: la superficie libera si mette perpendicolare a g − a. In un serbatoio accelerato orizzontalmente la superficie si inclina; accelerando verso l'alto la pressione sul fondo aumenta; in caduta libera la pressione diventa uniforme. In un recipiente che <b>ruota</b> con velocità ω la pressione cresce verso l'esterno e la superficie libera diventa un <b>paraboloide</b>: il liquido si abbassa al centro e sale alle pareti.",
+ fx:["d<i>z</i>/d<i>y</i> = −<i>a</i><sub>y</sub>/(<i>g</i> + <i>a</i><sub>z</sub>) <small>pendenza delle isobare</small>","<i>p</i> = ρω²<i>r</i>²/2 − γ<i>z</i> + cost <small>rotazione rigida</small>","Δ<i>z</i> = ω²<i>R</i>²/(2<i>g</i>) <small>dislivello tra parete e asse</small>"],
+ k:["Calcolare l'inclinazione della superficie in un serbatoio accelerato","Calcolare la pressione sul fondo con accelerazione verticale","Scrivere p(r,z) in rotazione rigida"],
+ tr:"In rotazione la pressione su un piano orizzontale <b>non</b> è costante: cresce con r².",
+ mc:"La rotazione rigida è il modello più semplice della <b>pompa centrifuga</b>: il fluido trascinato dalla girante guadagna pressione verso l'esterno, Δp ≈ ρω²(r₂² − r₁²)/2.",
+ ex:"Cilindro con R = 0,1 m che ruota a 20 rad/s: Δz = 400·0,01/19,62 ≈ 0,20 m."},
+{id:"07",m:"C",mac:2,t:"Cinematica dei fluidi",f:"cinematica.pdf",
+ s:"Per un fluido in moto si definiscono dei <b>campi</b>: in ogni punto e in ogni istante una velocità, una pressione e una densità. Ci sono due punti di vista: <b>euleriano</b> (stai fermo in un punto e guardi passare il fluido) e <b>lagrangiano</b> (segui una particella). L'accelerazione di una particella ha due parti: quella <b>locale</b> (la velocità nel punto cambia col tempo) e quella <b>convettiva</b> (la particella si sposta dove la velocità è diversa). Per questo anche in moto stazionario una particella può accelerare, per esempio in un convergente. Il <b>teorema del trasporto di Reynolds</b> collega le leggi scritte per un sistema di particelle a un <b>volume di controllo</b> fisso o mobile: è la base delle equazioni globali.",
+ fx:["<b>a</b> = ∂<b>V</b>/∂<i>t</i> + (<b>V</b>·∇)<b>V</b> <small>locale + convettiva</small>","D<i>B</i><sub>sys</sub>/D<i>t</i> = ∂/∂<i>t</i> ∫<sub>CV</sub> ρ<i>b</i> d𝑉 + ∫<sub>CS</sub> ρ<i>b</i> (<b>V</b>·<b>n</b>) d<i>A</i> <small>Reynolds</small>"],
+ k:["Distinguere euleriano e lagrangiano, sistema e volume di controllo","Calcolare l'accelerazione da un campo di velocità","Spiegare i termini del teorema di Reynolds"],
+ tr:"Stazionario non vuol dire accelerazione nulla: manca solo la parte locale.",
+ mc:"Il teorema di Reynolds applicato a una girante porta all'<b>equazione di Eulero delle turbomacchine</b>, base di pompe e turbine."},
+{id:"08",m:"C",mac:3,t:"Dinamica I: linee di corrente e Bernoulli",f:"intro-dinamica-parte1.pdf",
+ s:"La <b>linea di corrente</b> è tangente alla velocità in ogni punto; in moto permanente coincide con la traiettoria. Scrivendo F = m·a lungo la linea di corrente, per un fluido <b>senza viscosità</b>, in moto <b>stazionario</b> e <b>incomprimibile</b>, si trova che p + γz + ½ρV² resta costante: è l'<b>equazione di Bernoulli</b>. Dividendo per γ ogni termine diventa un'altezza: quota z, altezza piezometrica p/γ e altezza cinetica V²/2g. La somma è il <b>carico totale</b> H, energia per unità di peso. In direzione perpendicolare: se le linee di corrente sono rettilinee la pressione nella sezione è idrostatica; se curvano, la pressione cresce verso l'esterno della curva.",
+ fx:["<i>z</i> + <i>p</i>/γ + <i>V</i>²/2<i>g</i> = <i>H</i> = cost <small>Bernoulli, per unità di peso [m]</small>","<i>p</i> + γ<i>z</i> + ½ρ<i>V</i>² = cost <small>per unità di volume [Pa]</small>","−∂<i>p</i>/∂<i>n</i> − γ d<i>z</i>/d<i>n</i> = ρ<i>V</i>²/<i>R</i> <small>direzione normale</small>"],
+ k:["Ricavare Bernoulli e dire le sue ipotesi","Scriverlo nelle tre forme con le unità giuste","Spiegare come varia la pressione in una sezione dritta o curva"],
+ tr:"Bernoulli semplice non vale attraverso una pompa o una turbina, né dove ci sono forti perdite. Per quei casi c'è il Bernoulli generalizzato (lezione 11).",
+ mc:"Il carico H è l'unità con cui si misurano la <b>prevalenza</b> delle pompe e il <b>salto</b> delle turbine."},
+{id:"09",m:"C",mac:3,t:"Dinamica II: applicazioni di Bernoulli",f:"intro-dinamica-parte2.pdf",
+ s:"Dove la corrente si ferma (<b>punto di ristagno</b>) tutta l'energia cinetica diventa pressione: il <b>tubo di Pitot</b> lo sfrutta per misurare la velocità. La <b>linea dei carichi totali</b> e la <b>linea piezometrica</b> (più bassa di V²/2g) si disegnano lungo una condotta: dove il tubo passa sopra la piezometrica c'è depressione. Per la <b>continuità</b> Q = VA è la stessa in ogni sezione: dove il tubo si stringe la velocità aumenta e la pressione cala. Se scende fino alla tensione di vapore c'è <b>cavitazione</b>. Sullo stesso principio funzionano i misuratori di portata (Venturi, diaframma, boccaglio). Da un foro esce un getto a velocità √(2gh) (<b>Torricelli</b>), ristretto dal coefficiente di contrazione. Infine sifone, paratoie e stramazzi.",
+ fx:["<i>V</i> = √(2<i>gh</i>) <small>Pitot e Torricelli</small>","<i>Q</i> = <i>V</i><sub>1</sub><i>A</i><sub>1</sub> = <i>V</i><sub>2</sub><i>A</i><sub>2</sub> <small>continuità</small>","<i>Q</i> = <i>C</i>·<i>A</i><sub>2</sub>√[2Δ<i>p</i>/(ρ(1 − <i>A</i><sub>2</sub>²/<i>A</i><sub>1</sub>²))] <small>Venturi</small>","<i>Q</i> = <i>C</i><sub>c</sub> <i>A</i><sub>foro</sub> √(2<i>gh</i>) <small>C<sub>c</sub> ≈ 0,61 foro a spigolo</small>","stramazzo: rettangolare <i>Q</i> ∝ <i>H</i><sup>3/2</sup>, triangolare <i>Q</i> ∝ <i>H</i><sup>5/2</sup>"],
+ k:["Ricavare la velocità da un Pitot","Disegnare linea dei carichi e piezometrica e trovare le zone in depressione","Calcolare la portata di un Venturi da un Δp misurato","Calcolare l'efflusso da un foro","Dire dove c'è rischio di cavitazione"],
+ tr:"Dimenticare il coefficiente (C o C<sub>c</sub>): la formula ideale sovrastima la portata.",
+ mc:"La cavitazione è il limite delle pompe in aspirazione (NPSH). Venturi, Pitot e stramazzi sono gli strumenti con cui in laboratorio si tracciano le curve delle macchine.",
+ ex:"Pitot in acqua con h = 0,20 m: V = √(2·9,81·0,20) ≈ 1,98 m/s. Foro a spigolo da 10 cm² con 2 m di battente: Q ≈ 0,61·0,001·6,26 ≈ 3,8 L/s."},
+{id:"10",m:"D",mac:3,t:"Equazioni globali I: massa, quantità di moto, momento",f:"equazioni-globali-parte1.pdf",
+ s:"Si guarda una regione fissa di spazio, il <b>volume di controllo</b>, e si fa il bilancio di ciò che entra ed esce. Per la <b>massa</b>: in regime stazionario la portata che entra è uguale a quella che esce. Per la <b>quantità di moto</b>: la somma delle forze sul fluido è uguale a quanta quantità di moto esce meno quanta ne entra, ΣF = ρQ(V<sub>out</sub> − V<sub>in</sub>). Le forze sono le pressioni sulle sezioni (sempre verso l'interno del volume), il peso e la reazione R delle pareti. La spinta del fluido sulla parete è S = −R. Il metodo è sempre lo stesso: scegli il volume, disegna le forze, proietta sugli assi. Prendendo i momenti rispetto all'asse di una girante si ottiene la <b>coppia</b> e quindi la potenza P = Tω.",
+ fx:["stazionario: ṁ<sub>in</sub> = ṁ<sub>out</sub>   serbatoio: d𝑉/d<i>t</i> = <i>Q</i><sub>in</sub> − <i>Q</i><sub>out</sub>","Σ<b>F</b> = ρ<i>Q</i>(<b>V</b><sub>out</sub> − <b>V</b><sub>in</sub>)","getto su parete perpendicolare: <i>S</i> = ρ<i>QV</i>","<i>T</i> = ρ<i>Q</i>(<i>r</i><sub>2</sub><i>V</i><sub>t2</sub> − <i>r</i><sub>1</sub><i>V</i><sub>t1</sub>)   <i>P</i> = <i>T</i>ω"],
+ k:["Fare il bilancio di massa con più ingressi e uscite","Calcolare la spinta su convergenti, curve, pale e paratoie","Usare il momento angolare per coppia e potenza di una girante"],
+ tr:"Le pressioni sulle sezioni del volume agiscono <b>verso l'interno</b>, sia in ingresso sia in uscita. Nelle slide l'asse z punta <b>verso il basso</b>: attento ai segni.",
+ mc:"Dal momento angolare nasce l'<b>equazione di Eulero delle turbomacchine</b>; il getto su pala è il modello della turbina <b>Pelton</b>.",
+ ex:"Getto con Q = 0,01 m³/s e V = 20 m/s contro una parete: S = 1000·0,01·20 = 200 N."},
+{id:"11",m:"D",mac:3,t:"Equazioni globali II: energia e Bernoulli generalizzato",f:"equazioni-globali-parte2.pdf",
+ s:"L'equazione dell'energia è il primo principio della termodinamica scritto per un volume di controllo. Il lavoro si divide in lavoro delle pressioni (da cui nasce l'<b>entalpia</b>) e <b>lavoro all'albero</b>, scambiato con pompe e turbine. Per un <b>gas</b> si usa la forma con l'entalpia. Per un <b>liquido</b> si separa la parte meccanica: l'energia persa per attrito è sempre positiva. Dividendo per g si ottiene il <b>Bernoulli generalizzato</b>: carico iniziale più prevalenza della pompa = carico finale più salto della turbina più perdite. Lungo un impianto la linea dei carichi scende per le perdite, sale a ogni pompa e scende a ogni turbina. Se il profilo di velocità non è uniforme si corregge con α (laminare α = 2, turbolento ≈ 1).",
+ fx:["<b><i>H</i><sub>in</sub> + <i>h</i><sub>p</sub> = <i>H</i><sub>out</sub> + <i>h</i><sub>t</sub> + <i>h</i><sub>L</sub></b> <small>h<sub>L</sub> ≥ 0</small>","<i>P</i> = γ<i>Q</i><i>h</i> <small>potenza idraulica [W]</small>","gas: ṁ[Δ<i>h</i> + Δ(<i>V</i>²/2) + <i>g</i>Δ<i>z</i>] = <i>Q̇</i> + <i>Ẇ</i><sub>s</sub>"],
+ k:["Scrivere il bilancio tra due serbatoi con pompa o turbina","Passare da carico a potenza","Disegnare la linea dei carichi di un impianto","Usare la forma con l'entalpia per un gas"],
+ tr:"h<sub>p</sub> va dalla parte dell'ingresso, h<sub>t</sub> e h<sub>L</sub> dalla parte dell'uscita. Le perdite non sono mai negative.",
+ mc:"È l'equazione base di tutto il corso di Macchine: h<sub>p</sub> è la <b>prevalenza</b>, h<sub>t</sub> il <b>salto utile</b>. La forma con l'entalpia è quella di compressori e turbine a gas e a vapore.",
+ ex:"Pompa tra due serbatoi con 20 m di dislivello e 3 m di perdite: h<sub>p</sub> = 23 m. Con Q = 0,05 m³/s la potenza idraulica è 9810·0,05·23 ≈ 11,3 kW."},
+{id:"12",m:"E",mac:3,t:"Correnti in pressione I: perdite distribuite",f:"correnti-in-pressione-parte1.pdf",
+ s:"In un tubo il moto può essere <b>laminare</b> (a strati) o <b>turbolento</b> (con vortici). Lo dice il <b>numero di Reynolds</b> Re = VD/ν: sotto circa 2000 è laminare, sopra 4000 turbolento. Lontano dall'ingresso l'attrito alla parete fa calare il carico in modo uniforme lungo il tubo: la pendenza è la <b>cadente</b> J. La perdita su una lunghezza ℓ si calcola con <b>Darcy-Weisbach</b>. Tutto sta nel trovare l'indice di resistenza λ: in laminare λ = 64/Re (moto di Poiseuille, profilo parabolico); in turbolento si usa <b>Colebrook-White</b> o il suo grafico, l'<b>abaco di Moody</b>, che dipende da Re e dalla scabrezza relativa ε/D. Per sezioni non circolari si usa il diametro idraulico D<sub>h</sub> = 4A/P.",
+ fx:["Re = <i>VD</i>/ν <small>&lt; 2000 laminare, &gt; 4000 turbolento</small>","<i>h</i><sub>L</sub> = λ (ℓ/<i>D</i>) <i>V</i>²/2<i>g</i> <small>Darcy-Weisbach</small>","laminare: λ = 64/Re","1/√λ = −2 log<sub>10</sub>[(ε/<i>D</i>)/3,7 + 2,51/(Re√λ)] <small>Colebrook</small>","<i>D</i><sub>h</sub> = 4<i>A</i>/<i>P</i>   τ<sub>w</sub> = γ<i>R</i><sub>h</sub><i>J</i>"],
+ k:["Calcolare Re e classificare il moto","Trovare λ con 64/Re, con Colebrook o con il Moody","Calcolare la perdita con Darcy-Weisbach","Calcolare il diametro idraulico di sezioni non circolari"],
+ tr:"Usare 64/Re anche in turbolento, oppure il logaritmo naturale invece di quello in base 10 in Colebrook. E ricorda che il fattore di Fanning è un quarto di λ.",
+ mc:"Le perdite distribuite sono la resistenza che la pompa deve vincere: servono per costruire la <b>curva dell'impianto</b>.",
+ ex:"Acqua in un tubo da 0,1 m a 1 m/s: Re = 10⁵, turbolento. Con ε/D = 5·10⁻⁴, λ ≈ 0,020; su 100 m la perdita è ≈ 1,0 m."},
+{id:"13",m:"E",mac:3,t:"Correnti in pressione II: perdite localizzate e impianti",f:"correnti-in-pressione-parte2.pdf",
+ s:"Ogni disturbo geometrico (imbocco, curva, valvola, allargamento) provoca una <b>perdita localizzata</b> K<sub>L</sub>·V²/2g, perché la corrente si stacca e forma vortici. Imbocco a spigolo 0,5, ben raccordato 0,04; lo <b>sbocco</b> in un serbatoio vale 1 (si perde tutta l'energia cinetica, dal modello di Borda). Tra due serbatoi il dislivello si spende tutto in perdite. Con una <b>pompa</b>: h<sub>p</sub> = dislivello + perdite; con una <b>turbina</b>: h<sub>t</sub> = dislivello − perdite. Scrivendo le perdite come h<sub>L</sub> = aQ² i tubi si combinano come resistenze: in <b>serie</b> si sommano le a, in <b>parallelo</b> hanno lo stesso ΔH e si sommano le portate. Si vedono anche le reti, il problema dei tre serbatoi e il <b>colpo d'ariete</b> per chiusura rapida di una valvola.",
+ fx:["<i>h</i><sub>L,loc</sub> = <i>K</i><sub>L</sub> <i>V</i>²/2<i>g</i>   Borda: <i>K</i><sub>L</sub> = (1 − <i>A</i><sub>1</sub>/<i>A</i><sub>2</sub>)²","due serbatoi: <i>z</i><sub>A</sub> − <i>z</i><sub>B</sub> = (λ<i>L</i>/<i>D</i> + Σ<i>K</i><sub>L</sub>) <i>V</i>²/2<i>g</i>","pompa: <i>h</i><sub>p</sub> = Δ<i>z</i> + <i>h</i><sub>L</sub>   <i>P</i><sub>u</sub> = γ<i>Qh</i><sub>p</sub>   η = <i>P</i><sub>u</sub>/<i>P</i><sub>ass</sub>","<i>h</i><sub>L</sub> = <i>aQ</i>²   serie: <i>a</i> = Σ<i>a</i><sub>i</sub>   parallelo: 1/√<i>a</i> = Σ 1/√<i>a</i><sub>i</sub>"],
+ k:["Sommare tutte le perdite (distribuite + localizzate) di un impianto","Calcolare la portata tra due serbatoi","Calcolare prevalenza, potenza e rendimento di una pompa, o salto e potenza di una turbina","Combinare tubi in serie e in parallelo","Spiegare il colpo d'ariete"],
+ tr:"Dimenticare la perdita di sbocco (K = 1). Nel parallelo è il <b>carico</b> a essere uguale, non la portata.",
+ mc:"È il <b>punto di funzionamento</b> di Macchine: la curva della pompa si interseca con quella dell'impianto, h = Δz + aQ². L'ugello con P = γQ·V<sub>B</sub>²/2g è il principio della Pelton.",
+ ex:"Pompa con 20 m di dislivello e 5 m di perdite, Q = 0,01 m³/s: h<sub>p</sub> = 25 m, P<sub>u</sub> ≈ 2,45 kW; con η = 0,75 assorbe ≈ 3,27 kW."},
+{id:"14",m:"F",mac:0,t:"Correnti a superficie libera",f:"correnti-superficie-libera.pdf",
+ s:"Nei canali la superficie è a pressione atmosferica e il moto è spinto dalla pendenza del fondo. In <b>moto uniforme</b> l'altezza non cambia e la pendenza del fondo è uguale alla cadente; la portata si calcola con <b>Gauckler-Strickler</b> (o Manning). Il <b>numero di Froude</b> confronta la velocità della corrente con quella delle piccole onde: sotto 1 la corrente è <b>lenta</b> e sente le condizioni a valle, sopra 1 è <b>veloce</b>. L'altezza in cui Fr = 1 è l'<b>altezza critica</b>. Il passaggio da veloce a lenta avviene con un <b>risalto idraulico</b>. L'<b>energia specifica</b> E = h + V²/2g è minima nell'altezza critica; su una soglia di fondo una corrente lenta si abbassa e una veloce si alza.",
+ fx:["<i>Q</i> = <i>K</i><sub>s</sub> <i>A</i> <i>R</i><sub>h</sub><sup>2/3</sup> <i>i</i><sup>1/2</sup> <small>Gauckler-Strickler</small>","Fr = <i>V</i>/√(<i>g</i><i>h̄</i>) <small>&lt;1 lenta, &gt;1 veloce</small>","rettangolare: <i>h</i><sub>c</sub> = (<i>q</i>²/<i>g</i>)<sup>1/3</sup>   <i>E</i><sub>min</sub> = 3/2 <i>h</i><sub>c</sub>","<i>E</i> = <i>h</i> + <i>V</i>²/2<i>g</i>"],
+ k:["Calcolare la portata di moto uniforme","Calcolare Froude e l'altezza critica","Prevedere cosa succede su una soglia di fondo"],
+ tr:"Su una soglia il carico H si conserva, ma l'energia specifica E (misurata dal fondo) cala di Δz.",
+ ex:"Canale rettangolare largo 2 m con Q = 4 m³/s: h<sub>c</sub> ≈ 0,74 m. Con h = 1,5 m, Fr ≈ 0,35: corrente lenta."},
+{id:"15",m:"F",mac:2,t:"Correnti attorno ai corpi: strato limite, resistenza, portanza",f:"correnti-attorno-corpi.pdf",
+ s:"Davanti a un corpo il fluido si ferma (ristagno, alta pressione), sui fianchi accelera (bassa pressione), dietro lascia una <b>scia</b>. Sulla parete la velocità è zero: lo strato sottile in cui la velocità passa da zero al valore esterno è lo <b>strato limite</b>. Se la pressione cresce nel verso del moto lo strato limite si <b>separa</b> e si forma la scia. La forza sul corpo si divide in <b>resistenza</b> (parallela alla corrente) e <b>portanza</b> (perpendicolare), espresse con i coefficienti C<sub>D</sub> e C<sub>L</sub>. Nei corpi tozzi conta la resistenza di forma, in quelli affusolati quella d'attrito. Per la sfera C<sub>D</sub> crolla attorno a Re ≈ 3·10⁵ (crisi della resistenza: per questo le palline da golf hanno le fossette). La portanza di un profilo cresce con l'angolo d'attacco fino allo <b>stallo</b>.",
+ fx:["<i>F</i><sub>D</sub> = <i>C</i><sub>D</sub> · ½ρ<i>V</i>²<i>A</i>   <i>F</i><sub>L</sub> = <i>C</i><sub>L</sub> · ½ρ<i>V</i>²<i>A</i>","δ ≈ 5<i>x</i>/√Re<sub>x</sub> <small>strato limite laminare (Blasius)</small>","efficienza = <i>C</i><sub>L</sub>/<i>C</i><sub>D</sub>"],
+ k:["Spiegare strato limite, separazione e scia","Calcolare resistenza e portanza usando l'area giusta","Leggere il grafico C<sub>D</sub>(Re) della sfera","Spiegare lo stallo"],
+ tr:"L'area di riferimento: <b>frontale</b> per i corpi tozzi, <b>in pianta</b> (corda × apertura) per profili e lastre.",
+ mc:"Le pale di pompe, ventilatori, compressori e turbine sono <b>profili alari</b>: lavorano con un angolo d'incidenza e fuori dal punto di progetto rischiano lo stallo. Per lo stesso motivo i compressori, dove la pressione cresce, sono più delicati delle turbine.",
+ ex:"Sfera da 0,2 m in aria a 10 m/s: Re ≈ 1,3·10⁵, C<sub>D</sub> ≈ 0,47, F<sub>D</sub> ≈ 0,89 N."}
+];
+const PLAN=[
+ {t:"Le basi: proprietà dei fluidi e Stevino",ids:["01","02"],x:"Ripassa le unità di misura e la differenza tra pressione assoluta e relativa. Fai tanti esercizi sui manometri."},
+ {t:"Spinte su superfici piane e curve",ids:["03","04"],x:"È la parte di statica più presente agli esami: allenati con paratoie rettangolari, circolari e superfici curve."},
+ {t:"Galleggiamento, moto rigido, cinematica",ids:["05","06","07"],x:"Lezioni più brevi: chiudi la statica e prepara la dinamica."},
+ {t:"Bernoulli e le sue applicazioni",ids:["08","09"],x:"Da qui in poi tutto è utile per Macchine. Pitot, Venturi e fori ogni giorno."},
+ {t:"Equazioni globali",ids:["10","11"],x:"Quantità di moto per le forze, Bernoulli generalizzato per gli impianti. Il cuore del collegamento con Macchine."},
+ {t:"Perdite di carico e impianti",ids:["12","13"],x:"Moody, perdite localizzate, pompe e turbine tra due serbatoi. Sono gli esercizi tipici d'esame."},
+ {t:"Canali e corpi",ids:["14","15"],x:"Teoria più che conti: concentrati su Froude, altezza critica, strato limite e resistenza."},
+ {t:"Ripasso ed esercizi d'esame",ids:[],x:"Rifai le carte di Autoverifica, poi i temi d'esame degli anni passati a tempo."}
+];
+const FORM=[
+ {h:"Proprietà",r:[["Peso specifico","γ = ρ<i>g</i> (acqua 9806 N/m³)"],["Pressione relativa","<i>p</i> = <i>p</i>* − 101 325 Pa"],["Newton","τ = μ d<i>u</i>/d<i>y</i> ;  ν = μ/ρ"],["Gas ideale","ρ = <i>p</i>*/(<i>RT</i>)"],["1 atm","101 325 Pa = 760 mmHg = 10,33 m H₂O"]]},
+ {h:"Statica",r:[["Stevino","<i>p</i><sub>1</sub> = <i>p</i><sub>2</sub> + γ<i>h</i>"],["Spinta piana","<i>F</i> = γ<i>h</i><sub>c</sub><i>A</i>"],["Centro di spinta","<i>y</i><sub>R</sub> = <i>y</i><sub>c</sub> + <i>I</i><sub>xc</sub>/(<i>y</i><sub>c</sub><i>A</i>)"],["Curva, orizzontale","<i>p</i><sub>Cx</sub><i>A</i><sub>x</sub>"],["Curva, verticale","γ𝑉 fino al p.c.i."],["Archimede","γ<sub>fl</sub>𝑉<sub>imm</sub>"],["Rotazione","Δ<i>z</i> = ω²<i>R</i>²/2<i>g</i>"]]},
+ {h:"Bernoulli e misure",r:[["Bernoulli","<i>z</i> + <i>p</i>/γ + <i>V</i>²/2<i>g</i> = cost"],["Continuità","<i>Q</i> = <i>V</i><sub>1</sub><i>A</i><sub>1</sub> = <i>V</i><sub>2</sub><i>A</i><sub>2</sub>"],["Pitot, Torricelli","<i>V</i> = √(2<i>gh</i>)"],["Foro","<i>Q</i> = <i>C</i><sub>c</sub><i>A</i>√(2<i>gh</i>)"],["Cavitazione","<i>p</i>* ≤ <i>p</i>*<sub>v</sub>"]]},
+ {h:"Equazioni globali",r:[["Quantità di moto","Σ<b>F</b> = ρ<i>Q</i>(<b>V</b><sub>out</sub> − <b>V</b><sub>in</sub>)"],["Getto su parete","<i>S</i> = ρ<i>QV</i>"],["Coppia girante","<i>T</i> = ρ<i>Q</i>(<i>r</i><sub>2</sub><i>V</i><sub>t2</sub> − <i>r</i><sub>1</sub><i>V</i><sub>t1</sub>)"],["Energia","<i>H</i><sub>in</sub> + <i>h</i><sub>p</sub> = <i>H</i><sub>out</sub> + <i>h</i><sub>t</sub> + <i>h</i><sub>L</sub>"],["Potenza","<i>P</i> = γ<i>QH</i>"]]},
+ {h:"Perdite di carico",r:[["Reynolds","Re = <i>VD</i>/ν"],["Darcy-Weisbach","<i>h</i><sub>L</sub> = λ(ℓ/<i>D</i>)<i>V</i>²/2<i>g</i>"],["Laminare","λ = 64/Re"],["Localizzate","<i>K</i><sub>L</sub><i>V</i>²/2<i>g</i>"],["Imbocco / sbocco","0,5 / 1"],["Borda","(1 − <i>A</i><sub>1</sub>/<i>A</i><sub>2</sub>)²"],["Resistenza","<i>h</i><sub>L</sub> = <i>aQ</i>²"],["Diametro idraulico","4<i>A</i>/<i>P</i>"]]},
+ {h:"Canali e corpi",r:[["Strickler","<i>Q</i> = <i>K</i><sub>s</sub><i>AR</i><sub>h</sub><sup>2/3</sup><i>i</i><sup>1/2</sup>"],["Froude","<i>V</i>/√(<i>gh̄</i>)"],["Altezza critica","(<i>q</i>²/<i>g</i>)<sup>1/3</sup>"],["Resistenza","<i>C</i><sub>D</sub>·½ρ<i>V</i>²<i>A</i>"],["Strato limite","δ ≈ 5<i>x</i>/√Re<sub>x</sub>"]]}
+];
+const QUIZ=[
+ ["01","Perché la pressione relativa non può scendere sotto −101,3 kPa?","Perché p = p* − p*atm e la pressione assoluta non può essere negativa: il minimo è il vuoto."],
+ ["01","Raddoppi la velocità della piastra mobile a parità di distanza. Cosa succede allo sforzo in un fluido newtoniano?","Raddoppia, perché τ = μU/b."],
+ ["01","Cosa succede all'acqua a 20 °C se la pressione assoluta scende a 2,34 kPa?","Bolle: ha raggiunto la tensione di vapore. È il meccanismo della cavitazione."],
+ ["02","Pressione relativa sul fondo di un serbatoio aperto profondo 5 m?","p = γh = 9806·5 ≈ 49 kPa."],
+ ["02","Perché un barometro ad acqua sarebbe alto circa 10 m?","h = p*atm/γ = 101 300/9806 ≈ 10,3 m. Il mercurio pesa 13,6 volte di più, quindi bastano 0,76 m."],
+ ["02","In un serbatoio chiuso il gas è a −9,8 kPa. Dov'è il p.c.i.?","Circa 1 m sotto la superficie del liquido (h* = p_gas/γ)."],
+ ["03","Paratoia verticale larga 2 m con 3 m d'acqua: spinta e punto di applicazione?","F = γbh²/2 ≈ 88 kN, applicata a h/3 = 1 m dal fondo."],
+ ["03","Perché in profondità centro di spinta e baricentro quasi coincidono?","Perché l'eccentricità I_xc/(y_c A) diminuisce quando y_c cresce: la pressione sulla superficie diventa quasi uniforme."],
+ ["04","Come calcoli la componente orizzontale della spinta su una superficie curva?","Come la spinta sulla sua proiezione su un piano verticale: F_x = p_Cx·A_x."],
+ ["04","A cosa è uguale la componente verticale?","Al peso del volume di fluido (reale o immaginario) compreso tra la superficie e il p.c.i."],
+ ["05","Un cubo di legno con ρ = 600 kg/m³ galleggia in acqua. Quanta parte è immersa?","Il 60%: V_imm/V = ρ_legno/ρ_acqua."],
+ ["05","Cos'è il metacentro?","L'intersezione tra la retta d'azione della spinta prima e dopo una piccola rotazione. Se sta sopra il baricentro, il galleggiante è stabile."],
+ ["06","Un serbatoio accelera in orizzontale con a = 0,5g. Di quanto si inclina la superficie?","dz/dy = −0,5, cioè circa 26,6°."],
+ ["06","Che pressione c'è sul fondo di un secchio in caduta libera?","Zero (relativa): la pressione è uniforme perché g + a_z = 0."],
+ ["07","Differenza tra accelerazione locale e convettiva?","Locale: la velocità in un punto fisso cambia col tempo. Convettiva: la particella si sposta in una zona a velocità diversa."],
+ ["07","Un moto stazionario ha sempre accelerazione nulla?","No: manca solo la parte locale. In un convergente le particelle accelerano anche in moto stazionario."],
+ ["08","Quali ipotesi servono per Bernoulli?","Fluido senza viscosità, moto stazionario, fluido incomprimibile e omogeneo; vale lungo una linea di corrente."],
+ ["08","In un tubo dritto con fluido in moto, come varia la pressione sulla verticale di una sezione?","In modo idrostatico, perché le linee di corrente sono rettilinee."],
+ ["08","Cosa rappresentano i tre termini z, p/γ, V²/2g?","Quota geodetica, altezza piezometrica e altezza cinetica: energia per unità di peso, in metri."],
+ ["09","Un Pitot in acqua segna 0,20 m. Velocità?","V = √(2·9,81·0,20) ≈ 1,98 m/s."],
+ ["09","La sezione di un tubo si dimezza. Cosa succede a velocità e pressione?","La velocità raddoppia e la pressione cala (Bernoulli)."],
+ ["09","Dove c'è più rischio di cavitazione in un impianto?","Nei punti con pressione più bassa: sezioni strette, punti alti sopra la linea piezometrica, ingresso delle pompe."],
+ ["10","Getto con Q = 0,01 m³/s a 20 m/s contro una parete perpendicolare. Spinta?","S = ρQV = 1000·0,01·20 = 200 N."],
+ ["10","Perché nell'equazione della quantità di moto compare R e non S?","Perché l'equazione è scritta per il fluido: la forza sul fluido è quella della parete, R. La spinta sulla parete è S = −R."],
+ ["10","In che verso agiscono le pressioni sulle sezioni del volume di controllo?","Sempre verso l'interno del volume, sia in ingresso sia in uscita."],
+ ["11","Pompa tra due serbatoi con 20 m di dislivello e 3 m di perdite. Prevalenza?","h_p = 20 + 3 = 23 m."],
+ ["11","Potenza idraulica di quella pompa con Q = 0,05 m³/s?","P = γQh_p = 9810·0,05·23 ≈ 11,3 kW."],
+ ["11","Quanto vale α in moto laminare e perché conta?","α = 2: l'energia cinetica vera è il doppio di quella calcolata con la velocità media."],
+ ["12","Acqua a 1 m/s in un tubo da 0,1 m (ν = 10⁻⁶ m²/s). Che regime?","Re = 10⁵: turbolento."],
+ ["12","In moto puramente turbolento, da cosa dipende λ?","Solo dalla scabrezza relativa ε/D."],
+ ["12","Diametro idraulico di un condotto 0,2 × 0,4 m?","D_h = 2ab/(a+b) ≈ 0,267 m."],
+ ["13","Quanto vale K per lo sbocco in un grande serbatoio, e perché?","1: per Borda con A₂ infinita si perde tutta l'energia cinetica."],
+ ["13","Pompa tra due serbatoi alla stessa quota: che prevalenza serve?","Solo le perdite: h_p = h_L."],
+ ["13","Due tubi uguali in parallelo con resistenza a₀ ciascuno. Resistenza equivalente?","a₀/4, perché 1/√a = 2/√a₀."],
+ ["14","In moto uniforme quanto vale la cadente?","È uguale alla pendenza del fondo."],
+ ["14","Una corrente con Fr = 2 risente di cosa succede a valle?","No: è veloce, le perturbazioni non risalgono."],
+ ["14","Cosa succede all'energia specifica nell'altezza critica?","È minima."],
+ ["15","Cosa fa separare lo strato limite?","Un gradiente avverso di pressione, cioè pressione crescente nel verso del moto."],
+ ["15","Perché C_D della sfera crolla attorno a Re ≈ 3·10⁵?","Lo strato limite diventa turbolento, la separazione si sposta indietro e la scia si stringe."],
+ ["15","Perché le pale delle macchine possono andare in stallo?","Perché sono profili alari: se l'angolo d'incidenza è troppo grande il flusso si separa e la portanza crolla."]
+];
+
+const KEY="mf-quaderno-v1";
+let ST={done:{},quiz:{}};
+try{const r=localStorage.getItem(KEY);if(r)ST=Object.assign(ST,JSON.parse(r))}catch(e){}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(ST))}catch(e){}}
+const byId=Object.fromEntries(L.map(x=>[x.id,x]));
+const $=s=>document.querySelector(s);
+const tabs=[...document.querySelectorAll("nav.tabs button")];
+function showTab(n){tabs.forEach(b=>b.setAttribute("aria-selected",b.dataset.tab===n));document.querySelectorAll("section.panel").forEach(p=>p.hidden=p.id!=="p-"+n);try{localStorage.setItem(KEY+"-tab",n)}catch(e){}}
+tabs.forEach(b=>b.onclick=()=>showTab(b.dataset.tab));
+function progress(){const n=L.filter(x=>ST.done[x.id]).length;$("#progTxt").textContent=n+" / "+L.length+" lezioni studiate";$("#progBar").style.width=(100*n/L.length)+"%"}
+const macTag=x=>x.mac>=2?'<span class="tag mac">Macchine'+(x.mac===3?' ★':'')+'</span>':'';
+function renderPlan(){
+ $("#plan").innerHTML=PLAN.map((w,i)=>`<div class="step"><div class="sdate"><b>Tappa ${i+1}</b>${w.ids.length?w.ids.length+(w.ids.length>1?" lezioni":" lezione"):"ripasso"}</div>
+ <div class="sbody"><h3>${w.t}</h3>${w.ids.length?`<div class="slinks">${w.ids.map(id=>`<button class="chip${ST.done[id]?" done":""}" data-go="${id}">${id} · ${byId[id].t}</button>`).join("")}</div>`:""}<p class="muted" style="font-size:.92rem">${w.x}</p></div></div>`).join("");
+ document.querySelectorAll("[data-go]").forEach(b=>b.onclick=()=>goLesson(b.dataset.go));
+}
+function renderLessons(){
+ const q=$("#q").value.trim().toLowerCase(),om=$("#onlyMac").checked,strip=s=>(s||"").replace(/<[^>]+>/g,"").toLowerCase();
+ let html="";
+ for(const [mk,mv] of Object.entries(MODS)){
+  const items=L.filter(x=>x.m===mk&&(!om||x.mac>=2)&&(!q||strip(x.t+" "+x.s+" "+x.fx.join(" ")+" "+x.k.join(" ")).includes(q)));
+  if(!items.length)continue;
+  html+=`<div class="mod" id="mod-${mk}"><div class="modhead"><span class="eyebrow">Blocco ${mk}</span><h2>${mv.n}</h2><span class="muted">${mv.d}</span></div>`+items.map(x=>`<details class="lez" id="lez-${x.id}">
+   <summary><span class="num">${x.id}</span><span class="st">${x.t}</span><span class="sm">${macTag(x)}<input type="checkbox" class="check" id="chk-${x.id}" data-id="${x.id}" ${ST.done[x.id]?"checked":""} aria-label="Segna come studiata" title="Segna come studiata"></span></summary>
+   <div class="lbody">
+    <div><h4>In parole semplici</h4><p>${x.s}</p></div>
+    <div><h4>Formule chiave</h4><div class="formulas">${x.fx.map(f=>`<div class="f">${f}</div>`).join("")}</div></div>
+    <div><h4>Devi saper fare</h4><ul>${x.k.map(k=>`<li>${k}</li>`).join("")}</ul></div>
+    ${x.ex?`<div class="exnote"><b>Esempio con i numeri</b> (aggiunto da me, non è nelle slide). ${x.ex}</div>`:""}
+    <div class="trap"><b>Errore tipico.</b> ${x.tr}</div>
+    ${x.mc?`<div class="macnote"><b>Per Macchine.</b> ${x.mc}</div>`:""}
+    <div class="file">Slide: UNI/Meccanica dei fluidi/${x.f}</div>
+   </div></details>`).join("")+"</div>";
+ }
+ $("#lezList").innerHTML=html||'<p class="muted">Nessuna lezione trovata. Prova un altro termine.</p>';
+ document.querySelectorAll(".check").forEach(c=>{c.onclick=e=>e.stopPropagation();c.onchange=()=>{ST.done[c.dataset.id]=c.checked;save();progress();renderPlan()}});
+}
+function goLesson(id){$("#q").value="";$("#onlyMac").checked=false;renderLessons();showTab("lezioni");const d=document.getElementById("lez-"+id);if(d){d.open=true;d.scrollIntoView({block:"start",behavior:"smooth"})}}
+function goMod(m){$("#q").value="";$("#onlyMac").checked=false;renderLessons();showTab("lezioni");const d=document.getElementById("mod-"+m);if(d)d.scrollIntoView({block:"start",behavior:"smooth"})}
+function renderMap(){
+ const N={A:[20,30,"A · Proprietà","lez. 01",0],B:[20,140,"B · Statica","lez. 02–06",0],C:[280,30,"C · Cinematica, Bernoulli","lez. 07–09",1],
+  D:[280,140,"D · Equazioni globali","lez. 10–11",1],E:[280,250,"E · Correnti in pressione","lez. 12–13",1],F:[20,250,"F · Canali e corpi","lez. 14–15",0],
+  M:[540,140,"MACCHINE CON LAB.","pompe · turbine · impianti",1]};
+ const W=210,H=56;
+ const E=[["A","B"],["A","C"],["B","C"],["C","D"],["D","E"],["E","F"],["C","M",1],["D","M",1],["E","M",1],["A","M",1]];
+ const side=(k,s)=>{const [x,y]=N[k];return s==="r"?[x+W,y+H/2]:s==="l"?[x,y+H/2]:s==="b"?[x+W/2,y+H]:[x+W/2,y]};
+ let s=`<svg viewBox="0 0 770 330" role="img" aria-label="Mappa dei blocchi di Meccanica dei fluidi e collegamenti con Macchine"><defs>
+ <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="head" d="M0,0L10,5L0,10z"/></marker>
+ <marker id="ahm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="head mac" d="M0,0L10,5L0,10z"/></marker></defs>`;
+ for(const [a,b,m] of E){const [ax,ay]=N[a],[bx,by]=N[b];let p1,p2;
+  if(ax===bx){p1=side(a,ay<by?"b":"t");p2=side(b,ay<by?"t":"b")}else{p1=side(a,ax<bx?"r":"l");p2=side(b,ax<bx?"l":"r")}
+  if(a==="E"&&b==="F"){p1=side("E","l");p2=side("F","r")}
+  if(a==="A"&&b==="M"){p1=[N.A[0]+W/2,N.A[1]];p2=[N.M[0]+W/2,N.M[1]];s+=`<path class="edge mac" d="M${p1[0]},${p1[1]} C${p1[0]},8 ${p2[0]},8 ${p2[0]},${p2[1]}" marker-end="url(#ahm)"/>`;continue}
+  const mx=(p1[0]+p2[0])/2;s+=`<path class="edge${m?" mac":""}" d="M${p1[0]},${p1[1]} C${mx},${p1[1]} ${mx},${p2[1]} ${p2[0]},${p2[1]}" marker-end="url(#${m?"ahm":"ah"})"/>`}
+ for(const [k,[x,y,t,sub,m]] of Object.entries(N))s+=`<g class="node${m?" mac":""}" data-m="${k}" tabindex="0" role="button" aria-label="${t}"><rect x="${x}" y="${y}" width="${W}" height="${H}" rx="4"/><text x="${x+12}" y="${y+24}">${t}</text><text class="sub" x="${x+12}" y="${y+43}">${sub}</text></g>`;
+ s+=`<text class="lbl" x="20" y="325">Bordo e frecce arancio: strada verso Macchine con laboratorio · A → Macchine: la cavitazione</text></svg>`;
+ $("#mapbox").innerHTML=s;
+ document.querySelectorAll(".node").forEach(g=>{const go=()=>{g.dataset.m==="M"?showTab("metodo"):goMod(g.dataset.m)};g.onclick=go;g.onkeydown=e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go()}}});
+}
+function renderForm(){$("#fgrid").innerHTML=FORM.map(b=>`<div class="fcard"><h3>${b.h}</h3><table>${b.r.map(r=>`<tr><td>${r[0]}</td><td class="m">${r[1]}</td></tr>`).join("")}</table></div>`).join("")}
+let deck=[],qi=0;
+function buildDeck(){const v=$("#qmod").value;deck=QUIZ.map((q,i)=>i).filter(i=>{const id=QUIZ[i][0];return v==="all"?true:v==="rip"?ST.quiz[i]==="ko":v==="mac"?byId[id].mac>=2:byId[id].m===v});qi=0;showQ()}
+function shuffle(){for(let i=deck.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[deck[i],deck[j]]=[deck[j],deck[i]]}qi=0;showQ()}
+function showQ(){const vals=Object.values(ST.quiz);$("#qscore").textContent=`${vals.filter(v=>v==="ok").length} sapute · ${vals.filter(v=>v==="ko").length} da ripassare · ${QUIZ.length} totali`;
+ $("#qans").hidden=true;$("#qshow").hidden=false;$("#qok").hidden=true;$("#qko").hidden=true;
+ if(!deck.length){$("#qmeta").textContent="";$("#qtext").textContent="Nessuna carta in questo gruppo.";$("#qshow").hidden=true;return}
+ const [id,q,a]=QUIZ[deck[qi]];$("#qmeta").textContent=`Carta ${qi+1} di ${deck.length} · Lezione ${id} · ${byId[id].t}`;$("#qtext").textContent=q;$("#qans").textContent=a}
+function mark(v){if(!deck.length)return;ST.quiz[deck[qi]]=v;save();qi=(qi+1)%deck.length;if($("#qmod").value==="rip"&&v==="ok"){buildDeck();return}showQ()}
+$("#qmod").innerHTML=`<option value="all">Tutte le carte</option><option value="mac">Solo argomenti per Macchine</option><option value="rip">Solo da ripassare</option>`+Object.entries(MODS).map(([k,v])=>`<option value="${k}">${k} · ${v.n}</option>`).join("");
+$("#qmod").onchange=buildDeck;$("#qshuffle").onclick=shuffle;
+$("#qshow").onclick=()=>{$("#qans").hidden=false;$("#qshow").hidden=true;$("#qok").hidden=false;$("#qko").hidden=false};
+$("#qok").onclick=()=>mark("ok");$("#qko").onclick=()=>mark("ko");
+$("#q").oninput=renderLessons;$("#onlyMac").onchange=renderLessons;
+$("#expandAll").onclick=()=>{const all=[...document.querySelectorAll("details.lez")];const open=all.some(d=>!d.open);all.forEach(d=>d.open=open);$("#expandAll").textContent=open?"Chiudi tutte":"Apri tutte"};
+renderPlan();renderLessons();renderMap();renderForm();buildDeck();progress();
+try{const t=localStorage.getItem(KEY+"-tab");if(t&&$("#p-"+t))showTab(t)}catch(e){}
+if(location.hash==="#stampa"){
+ document.documentElement.classList.add("stampa");
+ const names={piano:"Percorso",mappa:"Mappa del corso",lezioni:"Lezioni",formule:"Formulario",quiz:"Autoverifica (domande e risposte)",metodo:"Come studiare"};
+ document.querySelectorAll("section.panel").forEach(p=>{p.hidden=false;const h=document.createElement("h2");h.className="ptitle";h.textContent=names[p.id.slice(2)];p.prepend(h)});
+ document.querySelectorAll("details").forEach(d=>d.open=true);
+ document.querySelectorAll("#p-quiz > p").forEach(p=>p.remove());
+ const box=document.createElement("div");box.innerHTML=QUIZ.map(([id,q,a],i)=>`<div class="qa"><b>${i+1}. ${q}</b><br><span class="muted">Lez. ${id} ·</span> ${a}</div>`).join("");$("#p-quiz").append(box);
+ document.querySelectorAll("#p-mappa .sheet p.muted").forEach(n=>n.innerHTML=n.innerHTML.replace(/ ?Clicca[^.]*\./g,""));
+}
+</script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(function(){})}</script></body></html>

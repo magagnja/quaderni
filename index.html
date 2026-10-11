@@ -1,0 +1,94 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#1d2a33"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Quaderni"><style>[hidden]{display:none!important}:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}.home-link{display:inline-block;margin:12px 0 0;font:500 .85rem "IBM Plex Mono",ui-monospace,monospace;color:inherit;opacity:.7;text-decoration:none}.home-link:hover{opacity:1}</style></head><body>
+<title>Quaderni di studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: indice dei quaderni su carta millimetrata; ogni materia ha il suo colore d'accento come sul suo quaderno */
+:root{
+  --paper:#f7f8f6; --sheet:#ffffff; --grid:#e3e8e6; --ink:#1d2a33; --muted:#5a6a72; --line:#cdd6d6;
+  --c-et:#a85a24; --c-nc:#6b3f8a; --c-mf:#1f5f9e; --c-ft:#a8402b; --ok:#1f6f4b;
+  --f-display:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
+  --f-body:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --paper:#12181c; --sheet:#182127; --grid:#1d282e; --ink:#e3eaec; --muted:#9aabb2; --line:#2c3a41;
+  --c-et:#e0915a; --c-nc:#c39be0; --c-mf:#79b0ea; --c-ft:#f0896f; --ok:#6fd0a1; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#12181c; --sheet:#182127; --grid:#1d282e; --ink:#e3eaec; --muted:#9aabb2; --line:#2c3a41;
+  --c-et:#e0915a; --c-nc:#c39be0; --c-mf:#79b0ea; --c-ft:#f0896f; --ok:#6fd0a1; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:15.5px/1.55 var(--f-body);margin:0;
+  background-image:linear-gradient(var(--grid) 1px,transparent 1px),linear-gradient(90deg,var(--grid) 1px,transparent 1px);
+  background-size:24px 24px;padding-inline:16px;padding-block:24px 48px}
+.wrap{max-width:760px;margin:0 auto;display:grid;gap:22px}
+h1,h2,h3{font-family:var(--f-display);margin:0;line-height:1.15;text-wrap:balance}
+h1{font-size:clamp(2rem,7vw,2.8rem)}
+h2{font-size:1.25rem;letter-spacing:.02em}
+.eyebrow{font:500 .74rem/1 var(--f-mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.muted{color:var(--muted)}
+.list{display:grid;gap:10px}
+a.book{display:grid;grid-template-columns:6px 1fr auto;gap:14px;align-items:center;text-decoration:none;color:inherit;background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:14px 16px 14px 0;overflow:hidden}
+a.book:hover,a.book:focus-visible{border-color:var(--ink);outline:none}
+a.book .spine{align-self:stretch;background:var(--c)}
+a.book h3{font-size:1.3rem}
+a.book>div{min-width:0}
+a.book .sub{font-size:.9rem;color:var(--muted)}
+.prog{display:flex;align-items:center;gap:8px;margin-top:6px;font:500 .78rem var(--f-mono);color:var(--muted)}
+.bar{width:120px;height:6px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar span{display:block;height:100%;background:var(--c)}
+.arrow{font:600 1.4rem var(--f-display);color:var(--c)}
+.tag{font:500 .68rem/1 var(--f-mono);letter-spacing:.06em;text-transform:uppercase;padding:3px 6px;border-radius:3px;border:1px solid var(--line);color:var(--muted);margin-left:6px;white-space:nowrap}
+.order{background:var(--sheet);border:1px solid var(--line);border-radius:6px;padding:16px;display:grid;gap:8px}
+.order ol{margin:0;padding-left:1.3em;display:grid;gap:4px}
+.status{font:500 .78rem var(--f-mono);color:var(--muted)}
+.status b{color:var(--ok)}
+</style>
+
+<div class="wrap">
+  <header style="display:grid;gap:8px">
+    <span class="eyebrow">Ingegneria · studio offline</span>
+    <h1>Quaderni di studio</h1>
+    <p class="muted">Funzionano anche senza connessione. Spunte, carte da ripassare e progressi restano salvati su questo dispositivo.</p>
+    <span class="status" id="status">Controllo la disponibilità offline…</span>
+  </header>
+
+  <section class="list" aria-label="Recuperi">
+    <h2>Esami da recuperare, in ordine</h2>
+    <a class="book" href="meccanica-fluidi.html" style="--c:var(--c-mf)"><span class="spine"></span>
+      <div><h3>Meccanica dei Fluidi<span class="tag">1°</span></h3><div class="sub">15 lezioni · statica, Bernoulli, perdite di carico, impianti</div><div class="prog" data-key="mf-quaderno-v1" data-tot="15"></div></div><span class="arrow">›</span></a>
+    <a class="book" href="fisica-tecnica.html" style="--c:var(--c-ft)"><span class="spine"></span>
+      <div><h3>Fisica Tecnica<span class="tag">2°</span></h3><div class="sub">48 lezioni · cicli, trasmissione del calore, 35 domande d'esame</div><div class="prog" data-key="ft-quaderno-v1" data-tot="48"></div></div><span class="arrow">›</span></a>
+    <a class="book" href="elettrotecnica.html" style="--c:var(--c-et)"><span class="spine"></span>
+      <div><h3>Elettrotecnica<span class="tag">3°</span></h3><div class="sub">35 lezioni · reti, fasori, trifase, circuiti magnetici</div><div class="prog" data-key="et-quaderno-v1" data-tot="35"></div></div><span class="arrow">›</span></a>
+  </section>
+
+  <section class="list" aria-label="Supporto">
+    <h2>Dispense di supporto</h2>
+    <a class="book" href="numeri-complessi.html" style="--c:var(--c-nc)"><span class="spine"></span>
+      <div><h3>Numeri complessi</h3><div class="sub">Per fasori, impedenze e trifase · con calcolatrice ed esercizi</div></div><span class="arrow">›</span></a>
+  </section>
+
+  <section class="order">
+    <h2>Le priorità</h2>
+    <ol>
+      <li><b>Esami di quest'anno</b>: Macchine elettriche, Macchine con laboratorio, Enertronica.</li>
+      <li><b>Recuperi</b>: Meccanica dei fluidi, poi Fisica tecnica (soprattutto la teoria), poi Elettrotecnica.</li>
+    </ol>
+    <p class="muted" style="font-size:.9rem">Meccanica dei fluidi e Fisica tecnica sono la base di Macchine con laboratorio. Di Elettrotecnica ti servono subito fasori, trifase, circuiti magnetici e trasformatore, per Macchine elettriche.</p>
+  </section>
+</div>
+<script>
+document.querySelectorAll(".prog").forEach(el=>{
+  let n=0;const tot=+el.dataset.tot;
+  try{const s=JSON.parse(localStorage.getItem(el.dataset.key)||"{}");n=Object.values(s.done||{}).filter(Boolean).length}catch(e){}
+  el.innerHTML=`<span class="bar"><span style="width:${Math.round(100*n/tot)}%"></span></span>${n} / ${tot} studiate`;
+});
+const st=document.getElementById("status");
+if("serviceWorker" in navigator){
+  navigator.serviceWorker.ready.then(()=>{st.innerHTML="<b>✓ Disponibile offline</b> · i quaderni sono salvati su questo dispositivo"}).catch(()=>{});
+  setTimeout(()=>{if(st.textContent.startsWith("Controllo"))st.textContent="Apri l'app una volta con la connessione per salvarla offline."},6000);
+}else{st.textContent="Questo browser non supporta l'uso offline."}
+</script>
+<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(function(){})}</script></body></html>
